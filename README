@@ -1,19 +1,14 @@
-This is my version of the active_scaffold_export plugin.
+This is active_scaffold_export plugin, forked from Volker Hochstein. 
 
-It works with Rails 2.3 and both rails-2.3 and master branches of ActiveScaffold.
+This version works for official ActiveScaffold gem/plugin (https://github.com/activescaffold/active_scaffold)
 
-I have renamed the old activescaffoldexport plugin to follow the same pattern as the other ActiveScaffold related plugins.
+It works with Rails 3.1 master branch of ActiveScaffold.
 
+For older versions, please refer to https://github.com/vhochstein/active_scaffold_export
 
-Rails 3.0 Gem:
-gem 'active_scaffold_export_vho'
+gem 'active_scaffold_export'
 or
-gem 'active_scaffold_export_vho', :git => 'git://github.com/vhochstein/active_scaffold_export.git', :branch => 'rails-3.0'
-
-Rails 3.1 Gem:
-gem 'active_scaffold_export_vho'
-or
-gem 'active_scaffold_export_vho', :git => 'git://github.com/vhochstein/active_scaffold_export.git'
+gem 'active_scaffold_export', :git => 'git://github.com/naaano/active_scaffold_export.git'
 
 In addition you have to add folowing line to your application.css file:
  *= require active_scaffold_export

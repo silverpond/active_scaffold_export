@@ -14,15 +14,15 @@ require './lib/active_scaffold_export/version.rb'
 
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "active_scaffold_export_vho"
+  gem.name = "active_scaffold_export"
   gem.version = ActiveScaffoldExport::Version::STRING
-  gem.homepage = "http://github.com/vhochstein/active_scaffold_export"
+  gem.homepage = "http://github.com/naaano/active_scaffold_export"
   gem.license = "MIT"
   gem.summary = %Q{Exporting Records with ActiveScaffold}
   gem.description = %Q{Exporting Records with ActiveScaffold}
   gem.email = "activescaffold@googlegroups.com"
-  gem.authors = ["Volker Hochstein"]
-  gem.add_runtime_dependency 'active_scaffold_vho', '~> 3.1'
+  gem.authors = ["Volker Hochstein", "Sergio Cambra", "Hernan Astudillo"]
+  gem.add_runtime_dependency 'active_scaffold', '~> 3.1'
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
