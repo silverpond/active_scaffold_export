@@ -84,7 +84,7 @@ module ActiveScaffold::Actions
 
       if params[:full_download] == 'true'
         find_options.merge!({
-          :per_page => 10000,
+          :per_page => 3000,
           :page => 1
         })
         find_page(find_options).pager.each do |page|
