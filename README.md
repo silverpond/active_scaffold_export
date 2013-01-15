@@ -29,7 +29,14 @@ conf.export.force_quotes = "true"
 ```
 And enjoy happy exporting :)
 
-Translations go in the same active scaffold scope:
+### Security
+It's controlled the same way as Active Scaffold. The extra actions added are:
+* *:show_export* for the options form
+* *:export* for retrieving the data
+Tested with AS internal security and [Cancan](https://github.com/ryanb/cancan)
+
+### Translations 
+Go in the same active scaffold scope:
 ```yaml
 active_scaffold:
     columns_for_export: Columnas para exportar
