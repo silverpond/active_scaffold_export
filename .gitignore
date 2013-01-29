@@ -44,3 +44,5 @@ Gemfile*
 # For vim:
 #*.swp
 nbproject
+
+gem

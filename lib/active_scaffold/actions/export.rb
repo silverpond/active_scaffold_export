@@ -56,14 +56,14 @@ module ActiveScaffold::Actions
       @export_config = export_config
 
       # start streaming output
-      self.response_body = proc { |response, output|
+      self.response_body = Enumerator.new do |y|
         find_items_for_export do |records|
           @records = records
-          str = render_to_string :partial => 'export', :layout => false
-          output.write(str)
+          str = render_to_string :partial => 'export', :layout => false, :formats => [:csv]
+          y << str
           params[:skip_header] = 'true' # skip header on the next run
         end
-      }
+      end
     end
 
     protected

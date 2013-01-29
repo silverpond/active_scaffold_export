@@ -1,11 +1,11 @@
 ACTIVE_SCAFFOLD_EXPORT_GEM = true
-ActiveScaffold rescue throw "should have included ActiveScaffold plug in first.  Please make sure that this plug-in comes alphabetically after the ActiveScaffold plug-in"
 
-require 'active_scaffold_export/engine'
-require 'active_scaffold_export/version'
+require 'active_scaffold_export/engine.rb'
+require 'active_scaffold_export/version.rb'
+#require 'active_scaffold_export/config/core.rb'
 
 # Load our overrides
-require "active_scaffold_export/config/core.rb"
+#require "active_scaffold_export/config/core.rb"
 
 module ActiveScaffoldExport
   def self.root

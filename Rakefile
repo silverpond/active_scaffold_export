@@ -22,7 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Exporting Records with ActiveScaffold}
   gem.email = "activescaffold@googlegroups.com"
   gem.authors = ["Volker Hochstein", "Sergio Cambra", "Hernan Astudillo"]
-  gem.add_runtime_dependency 'active_scaffold', '~> 3.1'
+  gem.add_runtime_dependency 'active_scaffold', '~> 3.2'
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
