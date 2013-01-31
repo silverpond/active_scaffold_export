@@ -7,10 +7,12 @@ Then, add this to your Gemfile:
 ```
 gem 'active_scaffold_export'
 ```
-if you're using REE or Ruby 1.8.7, get the REE version:
+if you're using REE or Ruby 1.8.7, you need to add backports gem as well as fastercsv since REE lacks ruby 1.9 streaming features and fastercsv is in core in 1.9
 ```
-gem 'active_scaffold_export', :git => 'git://github.com/naaano/active_scaffold_export.git', :branch => 'ree'
+gem 'backports'
+gem 'fastercsv'
 ```
+
 Remember to bundle install.
 Add to application.css:
 ```
