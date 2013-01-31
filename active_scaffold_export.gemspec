@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "active_scaffold_export"
-  s.version = "3.3.0"
+  s.version = "3.3.0.rc"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Volker Hochstein", "Sergio Cambra", "Hernan Astudillo"]
@@ -14,12 +14,12 @@ Gem::Specification.new do |s|
   s.email = "activescaffold@googlegroups.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README"
+    "README.md"
   ]
   s.files = [
     ".document",
     "LICENSE.txt",
-    "README",
+    "README.md",
     "Rakefile",
     "init.rb",
     "active_scaffold_export.gemspec",
