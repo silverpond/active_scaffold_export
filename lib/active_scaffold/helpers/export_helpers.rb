@@ -65,7 +65,7 @@ module ActiveScaffold
       ## This helper can be overridden to change the way that the headers
       # are formatted. For instance, you might want column.name.to_s.humanize
       def format_export_column_header_name(column)
-        column.name.to_s
+        column.label
       end
     end
   end
