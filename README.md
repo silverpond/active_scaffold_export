@@ -21,7 +21,7 @@ You can change this by adding to active scaffold config:
 ```
 conf.export.default_file_format = 'csv' # or 'xlsx' 
 ```
-read notes at the bottom about xlsx.
+read important notes at the bottom about xlsx.
 
 Remember to bundle install.
 Add to application.css:
@@ -60,7 +60,9 @@ active_scaffold:
 ### XLSX support 
 This support depends on axlsx_rails and axlsx of course. 
 header styling override will be added soon. 
-NOTE: There's NO streaming support for xlsx format yet. Only CSV. So if your data is huge, set default_file_format to 'csv' instead.  
+NOTE: There's NO streaming support for xlsx format. Only CSV. So if your data is huge, set default_file_format to 'csv' instead.
+Streaming in xlsx will never be supported since the entire file needs to be serialized and zipped to be a valid OOXML file. 
+So, rather than streaming, background jobs will be the best approach.  
 
 This gem has not been tested in other rubies than REE and Ruby 1.9. 
 For contact, help, support, comments, please use Active Scaffold official mailing list  activescaffold@googlegroups.com
