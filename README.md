@@ -1,5 +1,5 @@
 # Active Scaffold Export
-### An [active scaffold](https://github.com/activescaffold/active_scaffold) addon to let it export data in CSV format
+### An [active scaffold](https://github.com/activescaffold/active_scaffold) addon to let it export data in CSV or XLSX format
 
 ####How to?
 Easy. First get [active scaffold](https://github.com/activescaffold/active_scaffold) if you haven't yet. 
@@ -12,6 +12,16 @@ if you're using REE or Ruby 1.8.7, you need to add backports gem as well as fast
 gem 'backports'
 gem 'fastercsv'
 ```
+if you want xlsx format, add:
+```
+gem 'axlsx_rails'
+```
+if that gem is present, XLSX will be used by default. 
+You can change this by adding to active scaffold config:
+```
+conf.export.default_file_format = 'csv' # or 'xlsx' 
+```
+read notes at the bottom about xlsx.
 
 Remember to bundle install.
 Add to application.css:
@@ -46,6 +56,11 @@ active_scaffold:
     this_page: esta página
     all_pages: todas las páginas 
 ```
+
+### XLSX support 
+This support depends on axlsx_rails and axlsx of course. 
+header styling override will be added soon. 
+NOTE: There's NO streaming support for xlsx format yet. Only CSV. So if your data is huge, set default_file_format to 'csv' instead.  
 
 This gem has not been tested in other rubies than REE and Ruby 1.9. 
 For contact, help, support, comments, please use Active Scaffold official mailing list  activescaffold@googlegroups.com

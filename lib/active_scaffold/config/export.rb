@@ -29,7 +29,7 @@ module ActiveScaffold::Config
       end
     end
 
-    attr_writer :show_form, :allow_full_download, :force_quotes, :default_full_download, :default_delimiter, :default_skip_header, :default_deselected_columns
+    attr_writer :show_form, :allow_full_download, :force_quotes, :default_full_download, :default_delimiter, :default_skip_header, :default_deselected_columns, :default_file_format
     def show_form
       self.show_form = @core.export_show_form if @show_form.nil?
       @show_form
@@ -57,6 +57,16 @@ module ActiveScaffold::Config
     def default_deselected_columns
       self.default_deselected_columns = [] if @default_deselected_columns.nil?
       @default_deselected_columns
+    end
+    def default_file_format
+      if @core.export_xlsx_avaliable
+        self.default_file_format = @default_file_format || 'xlsx'
+      else
+        self.default_file_format = @default_file_format || @core.export_default_file_format
+      end
+    end
+    def xlsx_present?
+      Gem::Specification::find_all_by_name('axlsx_rails').any?
     end
 
     # provides access to the list of columns specifically meant for this action to use

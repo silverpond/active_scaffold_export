@@ -12,7 +12,7 @@ module ActiveScaffold::Actions
 
     # display the customization form or skip directly to export
     def show_export
-      export_config = active_scaffold_config.export
+      @export_config = active_scaffold_config.export
       respond_to do |wants|
         wants.html do
           render(:partial => 'show_export', :layout => true)
@@ -25,38 +25,41 @@ module ActiveScaffold::Actions
 
     # if invoked directly, will use default configuration
     def export
+      export_config = active_scaffold_config.export
+      if params[:export_columns].nil?
+        export_columns = {}
+        export_config.columns.each { |col|
+          export_columns[col.name.to_sym] = 1
+        }
+        options = {
+          :export_columns => export_columns,
+          :full_download => export_config.default_full_download.to_s,
+          :delimiter => export_config.default_delimiter,
+          :skip_header => export_config.default_skip_header.to_s
+        }
+        params.merge!(options)
+      end
+
+      @export_columns = export_config.columns.reject { |col| params[:export_columns][col.name.to_sym].nil? }
+      includes_for_export_columns = @export_columns.collect{ |col| col.includes }.flatten.uniq.compact
+      self.active_scaffold_includes.concat includes_for_export_columns
+      @export_config = export_config
+
+      # this is required if you want this to work with IE
+      if request.env['HTTP_USER_AGENT'] =~ /msie/i
+        response.headers['Pragma'] = "public"
+        response.headers['Cache-Control'] = "no-cache, must-revalidate, post-check=0, pre-check=0"
+        response.headers['Expires'] = "0"
+      end
+      response.headers['Content-Disposition'] = "attachment; filename=#{export_file_name}"
+
+      unless defined? Mime::XLSX
+        Mime::Type.register "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", :xlsx
+      end
+
       respond_to do |format|
         format.csv do
-          export_config = active_scaffold_config.export
-          if params[:export_columns].nil?
-            export_columns = {}
-            export_config.columns.each { |col|
-              export_columns[col.name.to_sym] = 1
-            }
-            options = {
-              :export_columns => export_columns,
-              :full_download => export_config.default_full_download.to_s,
-              :delimiter => export_config.default_delimiter,
-              :skip_header => export_config.default_skip_header.to_s
-            }
-            params.merge!(options)
-          end
-
-          # this is required if you want this to work with IE
-          if request.env['HTTP_USER_AGENT'] =~ /msie/i
-            response.headers['Pragma'] = "public"
-            response.headers['Cache-Control'] = "no-cache, must-revalidate, post-check=0, pre-check=0"
-            response.headers['Expires'] = "0"
-          end
-
           response.headers['Content-type'] = 'text/csv'
-          response.headers['Content-Disposition'] = "attachment; filename=#{export_file_name}"
-
-          @export_columns = export_config.columns.reject { |col| params[:export_columns][col.name.to_sym].nil? }
-          includes_for_export_columns = @export_columns.collect{ |col| col.includes }.flatten.uniq.compact
-          self.active_scaffold_includes.concat includes_for_export_columns
-          @export_config = export_config
-
           # start streaming output
           self.response_body = Enumerator.new do |y|
             find_items_for_export do |records|
@@ -67,6 +70,24 @@ module ActiveScaffold::Actions
             end
           end
         end
+        format.xlsx do 
+          response.headers['Content-type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          p = Axlsx::Package.new
+          header = p.workbook.styles.add_style sz: 11, b: true,:bg_color => "69B5EF", :fg_color => "FF", alignment: { horizontal: :center }
+          p.workbook.add_worksheet(name: active_scaffold_config.label) do |sheet|
+            sheet.add_row(@export_columns.collect { |column| view_context.format_export_column_header_name(column) }, style: header) unless params[:skip_header]
+            find_items_for_export do |records|
+              records.each do |record|
+                sheet.add_row @export_columns.collect{|column| view_context.get_export_column_value(record, column)}
+              end
+            end
+          end
+          stream = p.to_stream # when adding rows to sheet, they won't pass to this stream if declared before. axlsx issue?
+          self.response_body = Enumerator.new do |y|
+            y << stream.read 
+          end
+        end
+
       end
     end
 
@@ -104,7 +125,7 @@ module ActiveScaffold::Actions
     # The default name of the downloaded file.
     # You may override the method to specify your own file name generation.
     def export_file_name
-      "#{self.controller_name}.csv"
+      "#{self.controller_name}.#{active_scaffold_config.export.default_file_format}"
     end
 
     # The default security delegates to ActiveRecordPermissions.

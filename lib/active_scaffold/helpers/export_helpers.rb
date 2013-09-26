@@ -67,6 +67,7 @@ module ActiveScaffold
       def format_export_column_header_name(column)
         column.label
       end
+
     end
   end
 end
