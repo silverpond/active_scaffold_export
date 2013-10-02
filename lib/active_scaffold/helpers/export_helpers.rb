@@ -9,14 +9,14 @@ module ActiveScaffold
       # format_export_column(raw_value)
       # format_singular_association_export_column(association_record)
       # format_plural_association_export_column(association_records)
-      def get_export_column_value(record, column)
+      def get_export_column_value(record, column, csv = true)
         if export_column_override? column
           send(export_column_override(column), record)
         else
           raw_value = record.send(column.name)
 
           if column.association.nil? or column_empty?(raw_value)
-            format_export_column(raw_value)
+            csv ? format_export_column(raw_value) : raw_value # xlsx needs original data type
           else
             case column.association.macro
             when :has_one, :belongs_to
@@ -37,7 +37,7 @@ module ActiveScaffold
       end
 
       def format_export_column(raw_value)
-        format_value_for_csv(raw_value)
+        format_value_for_csv(raw_value) 
       end
 
       def format_value_for_csv(column_value)
