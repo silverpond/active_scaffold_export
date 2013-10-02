@@ -62,7 +62,8 @@ This support depends on axlsx_rails and axlsx of course.
 header styling override will be added soon. 
 NOTE: There's NO streaming support for xlsx format. Only CSV. So if your data is huge, set default_file_format to 'csv' instead.
 Streaming in xlsx will never be supported since the entire file needs to be serialized and zipped to be a valid OOXML file. 
-So, rather than streaming, background jobs will be the best approach.  
+So, rather than streaming, background jobs will be the most likely future approach.  
+[Read axlsx issue about this](https://github.com/randym/axlsx/issues/169#issuecomment-13252750)
 
 This gem has not been tested in other rubies than REE and Ruby 1.9. 
 For contact, help, support, comments, please use Active Scaffold official mailing list  activescaffold@googlegroups.com
