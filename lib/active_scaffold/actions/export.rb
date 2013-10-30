@@ -44,6 +44,11 @@ module ActiveScaffold::Actions
       includes_for_export_columns = @export_columns.collect{ |col| col.includes }.flatten.uniq.compact
       self.active_scaffold_includes.concat includes_for_export_columns
       @export_config = export_config
+      # Make sure active_scaffold's find_page is dealing with the same list of
+      # columns. Prevents an invalid SQL query when exporting after filtering
+      # with field_search against a relation column, and that relation column is
+      # not included in the set of export columns.
+      @list_columns = @export_columns
 
       # this is required if you want this to work with IE
       if request.env['HTTP_USER_AGENT'] =~ /msie/i
