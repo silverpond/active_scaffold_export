@@ -30,9 +30,11 @@
     <%= content_tag(:label, radio_button_tag('full_download', true, export_config.default_full_download) + " #{as_(:all_pages)}".html_safe) if export_config.allow_full_download %>
   </div>
   <div class="separator"></div>
-  <div class="option checkbox-wrapper">
-    <%= content_tag(:label, radio_button_tag('format', :xlsx, export_config.default_file_format.to_sym == :xlsx) + ' XLSX') %>
-  </div>
+  <% if export_config.xlsx_present? %>
+    <div class="option checkbox-wrapper">
+      <%= content_tag(:label, radio_button_tag('format', :xlsx, export_config.default_file_format.to_sym == :xlsx) + ' XLSX') %>
+    </div>
+  <% end %>
   <div class="option checkbox-wrapper">
     <%= content_tag(:label, radio_button_tag('format', :csv, export_config.default_file_format.to_sym == :csv) + ' CSV') %>
   </div>
